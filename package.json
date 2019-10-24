@@ -1,13 +1,14 @@
 {
   "name": "@clay10/vue-components",
   "version": "0.1.2",
-  "main": "dist/clay10-vue-components.common.js",
-  "module": "dist/clay10-vue-components.es.js",
-  "types": "types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build-bundle": "vue-cli-service build --target lib --name clay10-vue-components ./src/components.ts --report",
+    "build-rollup": "rollup -c",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
@@ -19,11 +20,12 @@
     "*.js"
   ],
   "dependencies": {
-    "ts-debounce": "^1.0.0",
     "core-js": "^3.3.2",
     "countup.js": "^2.0.4",
     "fuse.js": "^3.4.5",
     "lottie-web": "^5.5.9",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "ts-debounce": "^1.0.0",
     "vue": "^2.6.10",
     "vuejs-paginate": "^2.1.0"
   },
@@ -41,6 +43,11 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
     "prettier": "^1.18.2",
+    "rollup": "^1.25.2",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "rollup-plugin-vue": "^5.0.1",
     "typescript": "^3.5.3",
     "vue-template-compiler": "^2.6.10"
   }
