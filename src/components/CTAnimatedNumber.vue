@@ -1,25 +1,24 @@
 <template>
-  <span ref="numberElement"></span>
+  <span>{{ formattedNumber }}</span>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { CountUp } from "countup.js";
-import { debounce } from "ts-debounce";
+import { TweenLite } from "gsap";
 import { Formatter } from "../types";
 
+// TODO: duration and starting number
 export default Vue.extend({
-  name: "CtAnimatedNumber",
   props: {
     value: {
       required: true,
       type: Number
     },
-    startAt: {
+    precision: {
       type: Number,
       default: 0
     },
-    precision: {
+    start: {
       type: Number,
       default: 0
     },
@@ -29,13 +28,13 @@ export default Vue.extend({
     },
     formatter: {
       type: Object,
-      default: (): Formatter<number> => {
+      default: (): Formatter<string> => {
         return {
-          to(value: number) {
-            return value.toString();
+          to(value: string) {
+            return value;
           },
           from(value: string) {
-            return parseInt(value, 10);
+            return value;
           }
         };
       }
@@ -43,29 +42,21 @@ export default Vue.extend({
   },
   data() {
     return {
-      counter: {} as CountUp
+      tweenedNumber: 0
     };
   },
-  watch: {
-    value(value) {
-      this.update(value);
+  created() {
+    this.tweenedNumber = this.start;
+  },
+  computed: {
+    formattedNumber(): any {
+      return this.formatter.to(this.tweenedNumber);
     }
   },
-  async mounted() {
-    await this.$nextTick();
-    const element = this.$refs.numberElement as HTMLElement;
-
-    this.counter = new CountUp(element, this.value, {
-      startVal: this.startAt,
-      decimalPlaces: this.precision,
-      duration: this.duration / 1000,
-      formattingFn: this.formatter.to
-    });
-  },
-  methods: {
-    update: debounce(function(this: any, value) {
-      this.counter.update(value);
-    }, 250)
+  watch: {
+    value(tweenedNumber) {
+      TweenLite.to(this.$data, this.duration / 1000, { tweenedNumber });
+    }
   }
 });
 </script>

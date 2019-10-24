@@ -1,6 +1,6 @@
 {
   "name": "@clay10/vue-components",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -25,15 +25,17 @@
     "src/*"
   ],
   "dependencies": {
-    "countup.js": "^2.0.4",
+    "@types/accounting": "^0.4.1",
+    "@types/gsap": "^1.20.2",
+    "accounting": "^0.4.1",
     "fuse.js": "^3.4.5",
+    "gsap": "^2.1.3",
     "lottie-web": "^5.5.9",
     "ts-debounce": "^1.0.0",
+    "vue": "^2.6.10",
     "vuejs-paginate": "^2.1.0"
   },
-  "peerDependencies": {
-    "vue": "^2.6.10"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "@vue/cli-plugin-babel": "^4.0.0",
