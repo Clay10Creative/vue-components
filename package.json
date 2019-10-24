@@ -1,23 +1,28 @@
 {
   "name": "@clay10/vue-components",
-  "version": "0.1.2",
+  "version": "0.3.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "homepage": "https://github.com/Clay10Creative/vue-components#readme",
+  "bugs": {
+    "url": "https://github.com/Clay10Creative/vue-components/issues",
+    "email": "matt@rolley.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clay10Creative/vue-components.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-bundle": "vue-cli-service build --target lib --name clay10-vue-components ./src/components.ts --report",
-    "build-rollup": "rollup -c",
+    "build-bundle": "rollup -c",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "files": [
     "dist/*",
-    "src/*",
-    "public/*",
-    "*.json",
-    "*.js"
+    "src/*"
   ],
   "dependencies": {
     "core-js": "^3.3.2",
