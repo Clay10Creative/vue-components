@@ -1,16 +1,31 @@
 {
-  "name": "components",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@clay10/vue-components",
+  "version": "0.1.2",
+  "main": "dist/clay10-vue-components.common.js",
+  "module": "dist/clay10-vue-components.es.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-bundle": "vue-cli-service build --target lib --name clay10-vue-components ./src/components.ts --report",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "dependencies": {
+    "ts-debounce": "^1.0.0",
     "core-js": "^3.3.2",
-    "vue": "^2.6.10"
+    "countup.js": "^2.0.4",
+    "fuse.js": "^3.4.5",
+    "lottie-web": "^5.5.9",
+    "vue": "^2.6.10",
+    "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
@@ -26,7 +41,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
     "prettier": "^1.18.2",
-    "typescript": "~3.5.3",
+    "typescript": "^3.5.3",
     "vue-template-compiler": "^2.6.10"
   }
 }

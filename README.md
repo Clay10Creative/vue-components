@@ -1,4 +1,5 @@
-# components
+# Clay10 components
+A shared library for the Clay10 components
 
 ## Project setup
 ```
