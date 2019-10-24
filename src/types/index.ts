@@ -1,4 +1,4 @@
-import { VueConstructor } from "vue";
+import Vue, { VueConstructor } from "vue";
 
 export interface Formatter<T> {
   to(value: T): string;
@@ -12,5 +12,5 @@ export interface Formatters {
 }
 
 export interface IComponents {
-  [key: string]: VueConstructor<any>;
+  [key: string]: VueConstructor<Vue>;
 }

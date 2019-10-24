@@ -7,7 +7,6 @@ import Vue from "vue";
 import { TweenLite } from "gsap";
 import { Formatter } from "../types";
 
-// TODO: duration and starting number
 export default Vue.extend({
   props: {
     value: {
@@ -49,7 +48,7 @@ export default Vue.extend({
     this.tweenedNumber = this.start;
   },
   computed: {
-    formattedNumber(): any {
+    formattedNumber(): number {
       return this.formatter.to(this.tweenedNumber);
     }
   },

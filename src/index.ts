@@ -1,4 +1,5 @@
 import Vue, { VueConstructor } from "vue";
+import { format, parse } from "date-fns";
 import accounting from "accounting";
 
 import CTAnimatedNumber from "./components/CTAnimatedNumber.vue";
@@ -23,13 +24,27 @@ export const formatters: Formatters = {
       }
     };
   },
-  currency(precision: number = 0, currency: string = '£'): Formatter<number> {
+  currency(precision: number = 0, currency: string = "£"): Formatter<number> {
     return {
       to(value) {
-        return accounting.formatMoney(value, currency, value > 10000 ? 0 : precision);
+        return accounting.formatMoney(
+          value,
+          currency,
+          value > 10000 ? 0 : precision
+        );
       },
       from(value) {
         return accounting.unformat(value);
+      }
+    };
+  },
+  date(dateFormat: string = "dd/MM/yyyy") {
+    return {
+      to(value: Date) {
+        return format(value, dateFormat);
+      },
+      from(value: string) {
+        return parse(value, dateFormat, new Date());
       }
     };
   }
@@ -46,9 +61,18 @@ export const Components: IComponents = {
 };
 
 export default {
-  install(Vue: VueConstructor<any>) {
-    Vue.filter('ctNumber', (value: number, precision: number = 0) => formatters.number(precision).to(value));
-    Vue.filter('ctCurrency', (value: number, precision: number = 0, currency: string = '£') => formatters.currency(precision, currency).to(value));
+  install(Vue: VueConstructor<Vue>) {
+    Vue.filter(
+      "ctCurrency",
+      (value: number, precision: number = 0, currency: string = "£") =>
+        formatters.currency(precision, currency).to(value)
+    );
+    Vue.filter("ctNumber", (value: number, precision: number = 0) =>
+      formatters.number(precision).to(value)
+    );
+    Vue.filter("ctDate", (date: Date, dateFormat: string = "dd/MM/yyyy") =>
+      formatters.date(dateFormat).to(date)
+    );
 
     Object.keys(Components).forEach((name: string) => {
       Vue.component(name, Components[name]);

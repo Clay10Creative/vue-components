@@ -34,7 +34,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Fuse from "fuse.js";
-const VuePaginate = require("vuejs-paginate");
 
 const get = (object: any, path: any, defaultValue = "") => {
   if (typeof path === "string") path = path.split(".");
@@ -47,7 +46,7 @@ const get = (object: any, path: any, defaultValue = "") => {
 export default Vue.extend({
   name: "CtPaginate",
   components: {
-    paginate: VuePaginate
+    paginate: () => import("vuejs-paginate")
   },
   props: {
     value: {
