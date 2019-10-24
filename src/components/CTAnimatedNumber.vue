@@ -11,11 +11,7 @@ export default Vue.extend({
   props: {
     value: {
       required: true,
-      type: Number
-    },
-    precision: {
-      type: Number,
-      default: 0
+      validator: prop => typeof prop === 'number' || prop === null
     },
     start: {
       type: Number,
@@ -23,7 +19,7 @@ export default Vue.extend({
     },
     duration: {
       type: Number,
-      default: 1000
+      default: 500
     },
     formatter: {
       type: Object,
