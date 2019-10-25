@@ -2,7 +2,8 @@
   <input
     :value="formatted"
     :class="{ empty: formatted.toString().length === 0 }"
-    @input="$emit('input', formatter.from($event.target.value))"
+    @input="$emit('input', $event.target.value)"
+    @change="$emit('change', formatter.from($event.target.value))"
   />
 </template>
 

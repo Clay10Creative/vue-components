@@ -8,7 +8,6 @@ import CTInput from "./components/CTInput.vue";
 import CTPaginate from "./components/CTPaginate.vue";
 import CTSelect from "./components/CTSelect.vue";
 import CTSlider from "./components/CTSlider.vue";
-import CTTooltip from "./components/CTTooltip.vue";
 import { IComponents, Formatters, Formatter } from "./types";
 
 export * from "./types";
@@ -56,8 +55,7 @@ export const Components: IComponents = {
   "ct-input": CTInput,
   "ct-paginate": CTPaginate,
   "ct-select": CTSelect,
-  "ct-slider": CTSlider,
-  "ct-tooltip": CTTooltip
+  "ct-slider": CTSlider
 };
 
 export default {
@@ -73,6 +71,12 @@ export default {
     Vue.filter("ctDate", (date: Date, dateFormat: string = "dd/MM/yyyy") =>
       formatters.date(dateFormat).to(date)
     );
+
+    Vue.directive("focus", {
+      inserted: function(el) {
+        el.focus();
+      }
+    });
 
     Object.keys(Components).forEach((name: string) => {
       Vue.component(name, Components[name]);

@@ -24,7 +24,12 @@ export default {
     commonjs(),
     typescript({
       clean: true,
-      objectHashIgnoreUnknownHack: true
+      objectHashIgnoreUnknownHack: true,
+      tsconfigOverride: {
+        declaration: true,
+        declarationMap: true,
+        declarationDir: "./dist"
+      }
     }),
     vue(),
     terser()
