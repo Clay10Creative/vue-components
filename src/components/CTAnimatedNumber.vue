@@ -10,8 +10,8 @@ import { Formatter } from "../types";
 export default Vue.extend({
   props: {
     value: {
-      required: true,
-      validator: prop => typeof prop === 'number' || prop === null
+      default: 0,
+      type: [Number, String]
     },
     start: {
       type: Number,
@@ -48,9 +48,16 @@ export default Vue.extend({
       return this.formatter.to(this.tweenedNumber);
     }
   },
+  methods: {
+    getNumber(value: any) {
+      return +value;
+    }
+  },
   watch: {
     value(tweenedNumber) {
-      TweenLite.to(this.$data, this.duration / 1000, { tweenedNumber });
+      TweenLite.to(this.$data, this.duration / 1000, {
+        tweenedNumber: this.getNumber(tweenedNumber)
+      });
     }
   }
 });

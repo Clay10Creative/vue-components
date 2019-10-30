@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <select :value="value" @change="$emit('input', $event.target.value)">
-      <option disabled value="">Please select one</option>
-      <option v-for="option in values" :key="option">{{ option }}</option>
-    </select>
-    {{ value }} {{ values }}
-  </div>
+  <select :value="value" @change="$emit('input', $event.target.value)">
+    <option disabled value="">Please select one</option>
+    <option v-for="option in values" :key="option">{{ option }}</option>
+  </select>
 </template>
 
 <script>
@@ -14,8 +11,8 @@ import Vue from "vue";
 export default Vue.extend({
   props: {
     value: {
-      required: true,
-      type: [String, Number]
+      type: [String, Number],
+      default: ""
     },
     values: {
       required: true

@@ -26,18 +26,6 @@
             :formatter="formatters.currency(2, '$')"
           />
         </p>
-        <p>
-          Input:
-          <ct-input
-            :value="animatedNumber.input"
-            @change="animatedNumber.input = $event"
-            :formatter="formatters.currency(2)"
-          />
-          <ct-animated-number
-            :value="animatedNumber.input"
-            :formatter="formatters.currency(2)"
-          />
-        </p>
       </template>
     </fieldset>
 
@@ -77,6 +65,39 @@
     </fieldset>
 
     <fieldset>
+      <legend @click="inputs.show = !inputs.show">
+        Inputs
+      </legend>
+      <template v-if="inputs.show">
+        <p>
+          <ct-input
+            type="number"
+            v-model.number="inputs.number"
+            :formatter="formatters.currency(2)"
+          />
+          <ct-animated-number
+            :value="inputs.number"
+            :formatter="formatters.currency(2)"
+          />
+        </p>
+        <p>
+          <ct-input
+            type="number"
+            :value="inputs.number"
+            @change="inputs.number = $event"
+            :formatter="formatters.currency(2)"
+          />
+        </p>
+        <p>
+          <ct-input :value="inputs.string" @change="inputs.string = $event" />
+        </p>
+        <p>
+          <ct-input v-model="inputs.string" />
+        </p>
+      </template>
+    </fieldset>
+
+    <fieldset>
       <legend @click="select.show = !select.show">
         Select
       </legend>
@@ -112,6 +133,11 @@ export default Vue.extend({
         show: false,
         showExample: true,
         frame: ""
+      },
+      inputs: {
+        show: true,
+        number: 0,
+        string: "hello"
       },
       select: {
         show: false,
