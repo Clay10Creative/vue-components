@@ -104,6 +104,7 @@
       <template v-if="select.show">
         <ct-select v-model="select.selected" :values="select.values" />
         <ct-select v-model="select.enumSelected" :values="select.enum" />
+        <ct-select v-model="select.undefined" :values="select.enum" />
       </template>
     </fieldset>
   </div>
@@ -141,6 +142,7 @@ export default Vue.extend({
       },
       select: {
         show: false,
+        undefined: undefined,
         selected: "Second value",
         values: {
           first: "First value",
