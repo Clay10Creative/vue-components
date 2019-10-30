@@ -1,12 +1,10 @@
 <template>
-  <span>
-    <select :value="value" @change="$emit('input', $event.target.value)">
-      <option disabled value="">{{ empty }}</option>
-      <option v-for="(option, key) in values" :key="key" :value="key">
-        {{ option }}
-      </option>
-    </select>
-  </span>
+  <select :value="value" @change="$emit('input', $event.target.value)">
+    <option disabled value="">{{ empty }}</option>
+    <option v-for="(option, key) in values" :key="key" :value="key">
+      {{ option }}
+    </option>
+  </select>
 </template>
 
 <script>
