@@ -3,10 +3,7 @@
     :value="showFormatted ? formatted : value"
     :type="inputType"
     :class="{ empty }"
-    @input="trigger('input', $event.target.value)"
-    @change="trigger('change', formatter.from($event.target.value))"
-    @blur="trigger('blur', $event)"
-    @focus="trigger('focus', $event)"
+    v-on="listeners"
   />
 </template>
 
@@ -53,17 +50,34 @@ export default Vue.extend({
     },
     inputType(): string {
       return this.showFormatted ? "text" : this.type;
-    }
-  },
-  methods: {
-    trigger(event: string, $event: any) {
-      if (event === "focus") {
-        this.focused = true;
-      } else if (event === "blur") {
-        this.focused = false;
-      }
-
-      this.$emit(event, $event);
+    },
+    listeners(): any {
+      var vm = this as any;
+      // `Object.assign` merges objects together to form a new object
+      return Object.assign(
+        {},
+        // We add all the listeners from the parent
+        this.$listeners,
+        // Then we can add custom listeners or override the
+        // behavior of some listeners.
+        {
+          // This ensures that the component works with v-model
+          input(event: any) {
+            vm.$emit("input", event.target.value);
+          },
+          change(event: any) {
+            vm.$emit("change", vm.formatter.from(event.target.value));
+          },
+          focus(event: any) {
+            vm.focused = true;
+            vm.$emit("focus", event);
+          },
+          blur(event: any) {
+            vm.focused = false;
+            vm.$emit("blur", event);
+          }
+        }
+      );
     }
   }
 });

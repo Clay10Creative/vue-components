@@ -81,10 +81,12 @@
           />
         </p>
         <p>
+          blur
           <ct-input
             type="number"
             :value="inputs.number"
             @change="inputs.number = $event"
+            @blur="log"
             :formatter="formatters.currency(2)"
           />
         </p>

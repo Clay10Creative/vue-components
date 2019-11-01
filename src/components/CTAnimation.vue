@@ -65,7 +65,9 @@ export default Vue.extend({
       rendererSettings: this.rendererSettings
     });
 
-    this.$emit("ready", this.animation);
+    if (this.$listeners.ready) {
+      this.$emit("ready", this.animation);
+    }
   },
   methods: {
     afterEnter(_el: Element) {

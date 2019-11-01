@@ -55,8 +55,24 @@ export default Vue.extend({
   },
   watch: {
     value(tweenedNumber) {
+      const vm = this;
       TweenLite.to(this.$data, this.duration / 1000, {
-        tweenedNumber: this.getNumber(tweenedNumber)
+        tweenedNumber: this.getNumber(tweenedNumber),
+        onComplete(args: any) {
+          if (vm.$listeners.complete) {
+            vm.$emit("complete", args);
+          }
+        },
+        onStart(args: any) {
+          if (vm.$listeners.start) {
+            vm.$emit("start", args);
+          }
+        },
+        onUpdate(args: any) {
+          if (vm.$listeners.update) {
+            vm.$emit("update", args);
+          }
+        }
       });
     }
   }
