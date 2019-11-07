@@ -1,6 +1,6 @@
 <template>
   <input
-    :value="showFormatted ? formatted : value"
+    :value="showInternal ? internal : formatted"
     :type="inputType"
     :class="{ empty }"
     v-on="listeners"
@@ -19,6 +19,10 @@ export default Vue.extend({
     type: {
       default: "text"
     },
+    formattedOnly: {
+      default: false,
+      type: Boolean
+    },
     formatter: {
       type: Object,
       default: (): Formatter<string> => {
@@ -35,49 +39,70 @@ export default Vue.extend({
   },
   data() {
     return {
-      focused: false
+      focused: false,
+      internal: null
     };
   },
   computed: {
-    showFormatted(): boolean {
-      return this.type.toLowerCase() === "number" && !this.focused;
+    showInternal(): boolean {
+      return this.focused;
     },
     formatted(): any {
-      return this.formatter ? this.formatter.to(this.value) : this.value;
+      if (this.showInternal) {
+        return this.internal;
+      }
+
+      return this.formattedOnly
+        ? this.internal
+        : this.formatter.to(this.internal);
     },
     empty(): boolean {
       return this.formatted ? this.formatted.toString().length === 0 : true;
     },
     inputType(): string {
-      return this.showFormatted ? "text" : this.type;
+      return this.showInternal ? this.type : "text";
     },
     listeners(): any {
       var vm = this as any;
-      // `Object.assign` merges objects together to form a new object
       return Object.assign(
         {},
-        // We add all the listeners from the parent
-        this.$listeners,
-        // Then we can add custom listeners or override the
-        // behavior of some listeners.
         {
-          // This ensures that the component works with v-model
           input(event: any) {
-            vm.$emit("input", event.target.value);
+            vm.internal = event.target.value;
+            if (vm.$listeners.input) {
+              vm.$emit("input", event.target.value);
+            }
           },
           change(event: any) {
-            vm.$emit("change", vm.formatter.from(event.target.value));
+            vm.internal = event.target.value;
+            if (vm.$listeners.change) {
+              vm.$emit("change", vm.formatter.from(event.target.value));
+            }
           },
           focus(event: any) {
             vm.focused = true;
-            vm.$emit("focus", event);
+            if (vm.$listeners.focus) {
+              vm.$emit("focus", event);
+            }
           },
           blur(event: any) {
             vm.focused = false;
-            vm.$emit("blur", event);
+            if (vm.$listeners.focus) {
+              vm.$emit("blur", event);
+            }
           }
         }
       );
+    }
+  },
+  watch: {
+    value: {
+      handler(value) {
+        this.internal = this.formattedOnly
+          ? this.formatter.to(this.value)
+          : this.value;
+      },
+      immediate: true
     }
   }
 });

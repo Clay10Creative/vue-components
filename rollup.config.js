@@ -26,9 +26,11 @@ export default {
       clean: true,
       objectHashIgnoreUnknownHack: true,
       tsconfigOverride: {
-        declaration: true,
-        declarationMap: true,
-        declarationDir: "./dist"
+        compilerOptions: {
+          declaration: true,
+          declarationMap: true,
+          declarationDir: "./dist"
+        }
       }
     }),
     vue(),

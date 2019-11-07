@@ -96,6 +96,15 @@
         <p>
           <ct-input v-model="inputs.string" />
         </p>
+
+        <p>
+          <ct-input
+            :value="inputs.date"
+            @change="inputs.date = $event"
+            :formatter="formatters.date()"
+            :formatted-only="true"
+          />
+        </p>
       </template>
     </fieldset>
 
@@ -140,7 +149,8 @@ export default Vue.extend({
       inputs: {
         show: true,
         number: 0,
-        string: "hello"
+        string: "hello",
+        date: new Date()
       },
       select: {
         show: false,
