@@ -1,8 +1,8 @@
 <template>
-  <select :value="value" v-on="listeners">
-    <option value="" disabled selected>{{ empty }}</option>
-    <option v-for="(option, key) in values" :key="key" :value="option">
-      {{ option }}
+  <select :value="selected" v-on="listeners">
+    <option value="-1" disabled selected>{{ initialText }}</option>
+    <option v-for="(option, index) in valuesArray" :key="index" :value="index">
+      {{ formatter.to(option) }}
     </option>
   </select>
 </template>
@@ -11,8 +11,6 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  // Use this and v-bind="$attrs" to use attributes elsewhere to send
-  // inheritAttrs: false,
   model: {
     prop: "value",
     event: "change"
@@ -24,14 +22,35 @@ export default Vue.extend({
     values: {
       required: true
     },
-    empty: {
+    formatter: {
+      type: Object,
+      default: (): any => {
+        return {
+          to(value: string) {
+            return value;
+          },
+          from(value: string) {
+            return value;
+          }
+        };
+      }
+    },
+    initialText: {
       default: "Select",
       type: String
     }
   },
   computed: {
+    selected(): number {
+      return this.valuesArray.findIndex((value: any) => value === this.value);
+    },
+    valuesArray(): any[] {
+      return Array.isArray(this.values)
+        ? this.values
+        : Object.values(this.values as any);
+    },
     listeners(): any {
-      var vm = this as any;
+      const vm = this as any;
       // `Object.assign` merges objects together to form a new object
       return Object.assign(
         {},
@@ -42,7 +61,10 @@ export default Vue.extend({
         {
           // This ensures that the component works with v-model
           change(event: any) {
-            vm.$emit("change", event.target.value);
+            vm.$emit(
+              "change",
+              vm.formatter.from(vm.valuesArray[+event.target.value])
+            );
           }
         }
       );
