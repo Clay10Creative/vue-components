@@ -12,6 +12,12 @@ import { IComponents, Formatters, Formatter } from "./types";
 
 export * from "./types";
 
+export interface FormatSettings {
+  prefix?: string;
+  suffix?: string;
+  precision?: number;
+}
+
 export const formatters: Formatters = {
   number(precision: number = 0): Formatter<number> {
     return {
@@ -46,6 +52,32 @@ export const formatters: Formatters = {
         return parse(value, dateFormat, new Date());
       }
     };
+  },
+  format(opts?: FormatSettings) {
+    const settings = Object.assign(
+      {},
+      {
+        prefix: "",
+        suffix: "",
+        precision: undefined
+      },
+      opts
+    );
+
+    return {
+      to(value) {
+        return settings.precision
+          ? `${accounting.formatMoney(
+              value,
+              settings.prefix,
+              settings.precision
+            )}${settings.suffix}`
+          : `${settings.prefix}${value}${settings.suffix}`;
+      },
+      from(value) {
+        return settings.precision ? accounting.unformat(value) : value;
+      }
+    };
   }
 };
 
@@ -70,6 +102,9 @@ export default {
     );
     Vue.filter("ctDate", (date: Date, dateFormat: string = "dd/MM/yyyy") =>
       formatters.date(dateFormat).to(date)
+    );
+    Vue.filter("ctFormat", (value: any, pSettings?: FormatSettings) =>
+      formatters.format(pSettings).to(value)
     );
 
     Vue.directive("focus", {

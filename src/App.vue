@@ -81,6 +81,15 @@
           />
         </p>
         <p>
+          <ct-input
+            type="number"
+            v-model.number="inputs.number"
+            :formatter="
+              formatters.format({ prefix: '$', suffix: 'mm', precision: 0 })
+            "
+          />
+        </p>
+        <p>
           blur
           <ct-input
             type="number"
@@ -92,8 +101,10 @@
         </p>
         <p>
           <ct-input :value="inputs.string" @change="inputs.string = $event" />
-        </p>
-        <p>
+          <ct-input
+            v-model="inputs.string"
+            :formatter="formatters.format({ prefix: '$', suffix: 'mm' })"
+          />
           <ct-input v-model="inputs.string" />
         </p>
 
