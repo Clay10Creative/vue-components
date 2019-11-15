@@ -45,7 +45,7 @@ export default Vue.extend({
   },
   computed: {
     isPasswordField(): boolean {
-      return this.type.toLowerCase() !== "password";
+      return this.type.toLowerCase() === "password";
     },
     showInternal(): boolean {
       return this.focused;
