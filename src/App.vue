@@ -102,6 +102,11 @@
         <p>
           <ct-input :value="inputs.string" @change="inputs.string = $event" />
           <ct-input
+            type="password"
+            :value="inputs.string"
+            @change="inputs.string = $event"
+          />
+          <ct-input
             v-model="inputs.string"
             :formatter="formatters.format({ prefix: '$', suffix: 'mm' })"
           />

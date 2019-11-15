@@ -13,7 +13,8 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
-npm run build
+npm run build-bundle
+npm publish
 ```
 
 ### Run your unit tests

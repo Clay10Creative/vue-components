@@ -72,10 +72,6 @@ export default Vue.extend({
     startPage: {
       type: Number,
       default: 1
-    },
-    sort: {
-      type: Function,
-      default: () => 0
     }
   },
   data() {
@@ -85,16 +81,16 @@ export default Vue.extend({
     };
   },
   computed: {
-    searchResults(): any {
+    searchResults(): any[] {
       if (this.search === "") {
-        return this.take(this.value).sort(this.sort);
+        return this.take(this.value);
       }
 
       const fuse = new Fuse(this.value, this.searchOptions);
 
       return this.take(fuse.search(this.search));
     },
-    results(): any {
+    results(): any[] {
       const advancedKeys = Object.keys(this.advancedSearch);
 
       if (advancedKeys.length === 0) {

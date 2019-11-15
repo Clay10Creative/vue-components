@@ -1,6 +1,6 @@
 <template>
   <input
-    :value="showInternal ? internal : formatted"
+    :value="inputValue"
     :type="inputType"
     :class="{ empty }"
     v-on="listeners"
@@ -44,6 +44,9 @@ export default Vue.extend({
     };
   },
   computed: {
+    isPasswordField(): boolean {
+      return this.type.toLowerCase() !== "password";
+    },
     showInternal(): boolean {
       return this.focused;
     },
@@ -59,7 +62,18 @@ export default Vue.extend({
     empty(): boolean {
       return this.formatted ? this.formatted.toString().length === 0 : true;
     },
+    inputValue(): any {
+      if (this.isPasswordField) {
+        return this.internal;
+      }
+
+      return this.showInternal ? this.internal : this.formatted;
+    },
     inputType(): string {
+      if (this.isPasswordField) {
+        return this.type;
+      }
+
       return this.showInternal ? this.type : "text";
     },
     listeners(): any {
