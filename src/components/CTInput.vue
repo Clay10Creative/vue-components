@@ -40,6 +40,7 @@ export default Vue.extend({
   data() {
     return {
       focused: false,
+      canBlur: true,
       internal: null
     };
   },
@@ -94,15 +95,23 @@ export default Vue.extend({
             }
           },
           focus(event: any) {
+            vm.canBlur = false;
             vm.focused = true;
+
             if (vm.$listeners.focus) {
               vm.$emit("focus", event);
             }
+
+            setTimeout(() => {
+              vm.canBlur = true;
+            }, 125);
           },
           blur(event: any) {
-            vm.focused = false;
-            if (vm.$listeners.focus) {
-              vm.$emit("blur", event);
+            if (vm.canBlur) {
+              vm.focused = false;
+              if (vm.$listeners.focus) {
+                vm.$emit("blur", event);
+              }
             }
           }
         }
